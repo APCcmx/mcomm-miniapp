@@ -1,541 +1,285 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Bitácora MCOMM</title>
-
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
     <style>
-
         body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 15px; color: #333; }
-
         h2 { text-align: center; color: #0056b3; }
-
         label { font-weight: bold; display: block; margin-top: 15px; font-size: 14px; }
-
         input, select, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-
         .checkbox-group { background: #fff; padding: 10px; border: 1px solid #ccc; border-radius: 5px; max-height: 150px; overflow-y: auto; margin-top: 5px; }
-
         .checkbox-group label { font-weight: normal; display: flex; align-items: center; margin-top: 5px; }
-
         .checkbox-group input { width: auto; margin-right: 10px; }
-
         button { background: #0056b3; color: white; border: none; padding: 15px; width: 100%; font-size: 16px; border-radius: 5px; cursor: pointer; margin-top: 25px; }
-
         button:hover { background: #004494; }
-
     </style>
-
 </head>
-
 <body>
 
-
-
     <h2>Bitácora de Avance Diario</h2>
-
     <form id="bitacoraForm">
-
         
-
         <label>IDP (ID Project):</label>
-
         <input type="text" id="idp" required>
 
-
-
         <label>Nombre del Circuito:</label>
-
         <input type="text" id="circuito" required>
 
-
-
         <label>Operador:</label>
-
         <select id="operador">
-
             <option value="AMX">AMX</option>
-
             <option value="AT&T">AT&T</option>
-
             <option value="ATC">ATC</option>
-
             <option value="AXTEL">AXTEL</option>
-
             <option value="BESTEL-USA">BESTEL-USA</option>
-
             <option value="CABLE BAHAMAS">CABLE BAHAMAS</option>
-
             <option value="CENTURY LINK">CENTURY LINK</option>
-
             <option value="COLUMBUS NETWORKS DE HONDURAS">COLUMBUS NETWORKS DE HONDURAS</option>
-
             <option value="ENER">ENER</option>
-
             <option value="IZZI - CABLEMAS">IZZI - CABLEMAS</option>
-
             <option value="IZZI - CABLEVISION">IZZI - CABLEVISION</option>
-
             <option value="IZZI-OPERBES">IZZI-OPERBES</option>
-
             <option value="IZZI-TVI">IZZI-TVI</option>
-
             <option value="LUMEN">LUMEN</option>
-
             <option value="MEGABLE">MEGABLE</option>
-
             <option value="NEX">NEX</option>
-
             <option value="TELEM">TELEM</option>
-
             <option value="TELMEX-USA">TELMEX-USA</option>
-
             <option value="UTS">UTS</option>
-
             <option value="C&W">C&W</option>
-
             <option value="RECA">RECA</option>
-
             <option value="TIGO">TIGO</option>
-
         </select>
-
-
 
         <label>Tecnología (Selección Múltiple):</label>
-
         <div class="checkbox-group" id="tecnologia">
-
             <label><input type="checkbox" value="DRX-30"> DRX-30</label>
-
             <label><input type="checkbox" value="DRX-90"> DRX-90</label>
-
             <label><input type="checkbox" value="EMXH800"> EMXH800</label>
-
             <label><input type="checkbox" value="HiT"> HiT</label>
-
             <label><input type="checkbox" value="GROOVE"> GROOVE</label>
-
             <label><input type="checkbox" value="XTM102"> XTM102</label>
-
             <label><input type="checkbox" value="XTM201"> XTM201</label>
-
             <label><input type="checkbox" value="XTM301"> XTM301</label>
-
             <label><input type="checkbox" value="XTM3000"> XTM3000</label>
-
             <label><input type="checkbox" value="MTC9"> MTC9</label>
-
             <label><input type="checkbox" value="XT5"> XT5</label>
-
             <label><input type="checkbox" value="XTC2"> XTC2</label>
-
             <label><input type="checkbox" value="XTC4"> XTC4</label>
-
             <label><input type="checkbox" value="XTC10"> XTC10</label>
-
             <label><input type="checkbox" value="XTC33"> XTC33</label>
-
             <label><input type="checkbox" value="XTC36"> XTC36</label>
-
             <label><input type="checkbox" value="OTC1"> OTC1</label>
-
             <label><input type="checkbox" value="DTC"> DTC</label>
-
             <label><input type="checkbox" value="DTNX"> DTNX</label>
-
             <label><input type="checkbox" value="ILS-FLEX"> ILS-FLEX</label>
-
         </div>
-
-
 
         <label>Nombre de quien reporta:</label>
-
         <select id="reporta">
-
             <option value="Carlos Pérez">Carlos Pérez</option>
-
             <option value="Ignacio Varela">Ignacio Varela</option>
-
             <option value="Jorge Carreño">Jorge Carreño</option>
-
             <option value="Jorge Lara">Jorge Lara</option>
-
             <option value="Jovanni Silva">Jovanni Silva</option>
-
             <option value="Luis Maciel">Luis Maciel</option>
-
             <option value="Mauricio Ramírez">Mauricio Ramírez</option>
-
             <option value="Miguel Cardenas">Miguel Cardenas</option>
-
             <option value="Oscar de la Torre">Oscar de la Torre</option>
-
             <option value="Oscar Jimenez">Oscar Jimenez</option>
-
             <option value="Ricardo Carreño">Ricardo Carreño</option>
-
             <option value="Santiago Gasca">Santiago Gasca</option>
-
             <option value="Sergio Carreño">Sergio Carreño</option>
-
             <option value="Sergio Silva">Sergio Silva</option>
-
             <option value="Otro">Otro (No aparezco en Lista)</option>
-
         </select>
-
-
 
         <label>Empresa a la que pertenece:</label>
-
         <select id="empresa">
-
             <option value="MCOMM">MCOMM</option>
-
         </select>
-
-
 
         <label>Nombre del PM:</label>
-
         <select id="pm">
-
             <option value="Alberto Medina">Alberto Medina</option>
-
             <option value="Victor Sanchez">Victor Sanchez</option>
-
             <option value="Luis Mejia">Luis Mejia</option>
-
             <option value="Jeannette Carpio">Jeannette Carpio</option>
-
             <option value="Jorge Barron">Jorge Barron</option>
-
             <option value="Victor Hugo Lopez">Victor Hugo Lopez</option>
-
             <option value="Martha Govea">Martha Govea</option>
-
             <option value="Fabiola Vazquez">Fabiola Vazquez</option>
-
             <option value="José Carrasco">José Carrasco</option>
-
         </select>
-
-
 
         <label>Nombre de PSE:</label>
-
         <select id="pse">
-
             <option value="Antonio Calvo">Antonio Calvo</option>
-
             <option value="Armando Delgado">Armando Delgado</option>
-
             <option value="Edgar Matsui">Edgar Matsui</option>
-
             <option value="Enrique Gomez">Enrique Gomez</option>
-
             <option value="Erick Galvez">Erick Galvez</option>
-
             <option value="Mario Castro">Mario Castro</option>
-
             <option value="Misael Velasco">Misael Velasco</option>
-
             <option value="Francisco Cardenas">Francisco Cardenas</option>
-
             <option value="Luis Vega">Luis Vega</option>
-
             <option value="Arturo Ramirez">Arturo Ramirez</option>
-
             <option value="Jaime Mora">Jaime Mora</option>
-
             <option value="Héctor Villegas">Héctor Villegas</option>
-
             <option value="Otro">Otro (No aparece en la lista)</option>
-
         </select>
-
-
 
         <label>Nombre de Sitio:</label>
-
         <input type="text" id="sitio" required>
 
-
-
         <label>Actividad desarrollada (Selección Múltiple):</label>
-
         <div class="checkbox-group" id="actividad">
-
             <label><input type="checkbox" value="Llegada al sitio"> Llegada al sitio</label>
-
             <label><input type="checkbox" value="Desempaque de inventario"> Desempaque de inventario</label>
-
             <label><input type="checkbox" value="Reporte de Inventario"> Reporte de Inventario</label>
-
             <label><input type="checkbox" value="Desmontaje"> Desmontaje</label>
-
             <label><input type="checkbox" value="Instalacion de Rack"> Instalacion de Rack</label>
-
             <label><input type="checkbox" value="Instalacion de repisa"> Instalacion de repisa</label>
-
             <label><input type="checkbox" value="Instalacion de tarjetas/Modulos"> Instalacion de tarjetas/Modulos</label>
-
             <label><input type="checkbox" value="Instalacion de PDU"> Instalacion de PDU</label>
-
             <label><input type="checkbox" value="Commisionamiento de Repisa"> Commisionamiento de Repisa</label>
-
             <label><input type="checkbox" value="Pruebas-locales"> Pruebas-locales</label>
-
             <label><input type="checkbox" value="Trouble shooting"> Trouble shooting</label>
-
             <label><input type="checkbox" value="INCIDENCIAS"> INCIDENCIAS</label>
-
         </div>
-
-
 
         <label>Comentarios Relevantes:</label>
-
         <textarea id="comentarios" rows="3"></textarea>
 
-
-
         <label>Problemas Persistentes:</label>
-
         <textarea id="problemas" rows="3"></textarea>
 
-
-
         <label>Indique la siguiente tarea a ejecutar (Selección Múltiple):</label>
-
         <div class="checkbox-group" id="siguienteTarea">
-
             <label><input type="checkbox" value="Llegada al sitio"> Llegada al sitio</label>
-
             <label><input type="checkbox" value="Desempaque de inventario"> Desempaque de inventario</label>
-
             <label><input type="checkbox" value="Pruebas - Enlace"> Pruebas - Enlace</label>
-
             <label><input type="checkbox" value="Trouble shooting"> Trouble shooting</label>
-
             <label><input type="checkbox" value="Entrega a cliente"> Entrega a cliente</label>
-
             <label><input type="checkbox" value="Se concluye actividad"> Se concluye actividad</label>
-
         </div>
-
-
 
         <label>Estado de la Asignación:</label>
-
         <select id="estado">
-
             <option value="Completo">Completo</option>
-
             <option value="En progreso">En progreso</option>
-
             <option value="Detenido">Detenido</option>
-
             <option value="Cancelado">Cancelado</option>
-
         </select>
-
-
 
         <label>Nombre de sus acompañantes (Grupo MCOMM):</label>
-
         <input type="text" id="acompanantes">
 
-
-
         <label>Avance (%):</label>
-
         <select id="avance">
-
             <option value="15%">15%</option>
-
             <option value="25%">25%</option>
-
             <option value="50%">50%</option>
-
             <option value="75%">75%</option>
-
             <option value="100%">100%</option>
-
         </select>
-
-
 
         <label>Adicionales (Requiere autorización del PSE):</label>
-
         <select id="adicionales">
-
             <option value="Ninguna">Ninguna</option>
-
             <option value="Smart hands">Smart hands</option>
-
             <option value="Hand - Carry">Hand - Carry</option>
-
             <option value="Logistica-Paquetería">Logistica-Paquetería</option>
-
             <option value="Site Conditioning">Site Conditioning</option>
-
         </select>
 
-
-
         <label>¿Trae consigo equipo de medición?:</label>
-
         <div class="checkbox-group" id="equipoMedicion">
-
             <label><input type="checkbox" value="No"> No</label>
-
             <label><input type="checkbox" value="1G"> 1G</label>
-
             <label><input type="checkbox" value="10G"> 10G</label>
-
             <label><input type="checkbox" value="100G"> 100G</label>
-
             <label><input type="checkbox" value="OSA"> OSA</label>
-
             <label><input type="checkbox" value="OTDRs, Fuente de Luz PMD-CD"> OTDRs, Fuente de Luz PMD-CD</label>
-
         </div>
 
-
-
         <label>Horas empleadas en la actividad:</label>
-
         <input type="number" id="horasActividad" step="0.5">
 
-
-
         <label>Horas empleadas para actividades adicionales:</label>
-
         <input type="number" id="horasAdicionales" step="0.5">
 
-
-
         <label>Fotografías (Evidencias):</label>
-
         <input type="file" id="fotos" multiple accept="image/*">
 
-
-
         <button type="button" onclick="enviarReporte()">Enviar Reporte</button>
-
     </form>
 
-
-
     <script>
-
         let tg = window.Telegram.WebApp;
-
         tg.expand();
 
-
-
         function obtenerSeleccionados(idContainer) {
-
             const checkboxes = document.querySelectorAll(`#${idContainer} input[type="checkbox"]:checked`);
-
             return Array.from(checkboxes).map(cb => cb.value).join(', ');
-
         }
 
+        async function enviarReporte() {
+            // Creamos el contenedor FormData para enviar texto y archivos binarios juntos
+            const formData = new FormData();
 
+            // Añadimos campos de texto y selecciones
+            formData.append('idp', document.getElementById('idp').value);
+            formData.append('circuito', document.getElementById('circuito').value);
+            formData.append('operador', document.getElementById('operador').value);
+            formData.append('tecnologia', obtenerSeleccionados('tecnologia'));
+            formData.append('reporta', document.getElementById('reporta').value);
+            formData.append('empresa', document.getElementById('empresa').value);
+            formData.append('pm', document.getElementById('pm').value);
+            formData.append('pse', document.getElementById('pse').value);
+            formData.append('sitio', document.getElementById('sitio').value);
+            formData.append('actividad', obtenerSeleccionados('actividad'));
+            formData.append('comentarios', document.getElementById('comentarios').value);
+            formData.append('problemas', document.getElementById('problemas').value);
+            formData.append('siguienteTarea', obtenerSeleccionados('siguienteTarea'));
+            formData.append('estado', document.getElementById('estado').value);
+            formData.append('acompanantes', document.getElementById('acompanantes').value);
+            formData.append('avance', document.getElementById('avance').value);
+            formData.append('adicionales', document.getElementById('adicionales').value);
+            formData.append('equipoMedicion', obtenerSeleccionados('equipoMedicion'));
+            formData.append('horasActividad', document.getElementById('horasActividad').value);
+            formData.append('horasAdicionales', document.getElementById('horasAdicionales').value);
+            formData.append('userTelegram', tg.initDataUnsafe?.user?.username || 'Desconocido');
 
-        function enviarReporte() {
-
-            const data = {
-
-                idp: document.getElementById('idp').value,
-
-                circuito: document.getElementById('circuito').value,
-
-                operador: document.getElementById('operador').value,
-
-                tecnologia: obtenerSeleccionados('tecnologia'),
-
-                reporta: document.getElementById('reporta').value,
-
-                empresa: document.getElementById('empresa').value,
-
-                pm: document.getElementById('pm').value,
-
-                pse: document.getElementById('pse').value,
-
-                sitio: document.getElementById('sitio').value,
-
-                actividad: obtenerSeleccionados('actividad'),
-
-                comentarios: document.getElementById('comentarios').value,
-
-                problemas: document.getElementById('problemas').value,
-
-                siguienteTarea: obtenerSeleccionados('siguienteTarea'),
-
-                estado: document.getElementById('estado').value,
-
-                acompanantes: document.getElementById('acompanantes').value,
-
-                avance: document.getElementById('avance').value,
-
-                adicionales: document.getElementById('adicionales').value,
-
-                equipoMedicion: obtenerSeleccionados('equipoMedicion'),
-
-                horasActividad: document.getElementById('horasActividad').value,
-
-                horasAdicionales: document.getElementById('horasAdicionales').value,
-
-                userTelegram: tg.initDataUnsafe?.user?.username || 'Desconocido'
-
-            };
-
-
-
-            fetch('https://automatizacion-abordaje-n8n.iqzp3s.easypanel.host/webhook-test/bitacora-abordaje', {
-
-                method: 'POST',
-
-                headers: { 'Content-Type': 'application/json' },
-
-                body: JSON.stringify(data)
-
-            }).then(response => {
-
-                if(response.ok) {
-
-                    tg.close();
-
-                } else {
-
-                    alert('Error al enviar el reporte.');
-
+            // Capturamos y agregamos las fotografías (evidencias) de forma binaria
+            const inputFotos = document.getElementById('fotos');
+            if (inputFotos && inputFotos.files.length > 0) {
+                for (let i = 0; i < inputFotos.files.length; i++) {
+                    // La llave 'fotos' empalma exactamente con el 'Field Name for Binary Data' en n8n
+                    formData.append('fotos', inputFotos.files[i]);
                 }
+            }
 
-            }).catch(error => {
+            try {
+                // NOTA CRÍTICA: Al usar FormData, NO se declara la cabecera 'Content-Type'. 
+                // El navegador maneja el protocolo multipart de forma automática.
+                const response = await fetch('https://automatizacion-abordaje-n8n.iqzp3s.easypanel.host/webhook-test/bitacora-abordaje', {
+                    method: 'POST',
+                    body: formData
+                });
 
+                if (response.ok) {
+                    tg.close();
+                } else {
+                    alert('Error al enviar el reporte.');
+                }
+            } catch (error) {
                 alert('Error de conexión: ' + error);
-
-            });
-
+            }
         }
-
     </script>
-
 </body>
-
 </html>
