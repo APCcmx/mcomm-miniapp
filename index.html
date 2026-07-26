@@ -118,10 +118,10 @@
         <form id="bitacoraForm">
             
             <label>IDP (ID Project):</label>
-            <input type="text" id="idp" required>
+            <input type="text" id="idp" required placeholder="Ingrese IDP">
 
             <label>Nombre del Circuito:</label>
-            <input type="text" id="circuito" required>
+            <input type="text" id="circuito" required placeholder="Nombre del circuito">
 
             <label>Operador:</label>
             <select id="operador">
@@ -228,7 +228,7 @@
             </select>
 
             <label>Nombre de Sitio:</label>
-            <input type="text" id="sitio" required>
+            <input type="text" id="sitio" required placeholder="Nombre del sitio">
 
             <label>Actividad desarrollada (Selección Múltiple):</label>
             <div class="checkbox-group" id="actividad">
@@ -247,10 +247,10 @@
             </div>
 
             <label>Comentarios Relevantes:</label>
-            <textarea id="comentarios" rows="3"></textarea>
+            <textarea id="comentarios" rows="3" placeholder="Comentarios..."></textarea>
 
             <label>Problemas Persistentes:</label>
-            <textarea id="problemas" rows="3"></textarea>
+            <textarea id="problemas" rows="3" placeholder="Problemas..."></textarea>
 
             <label>Indique la siguiente tarea a ejecutar (Selección Múltiple):</label>
             <div class="checkbox-group" id="siguienteTarea">
@@ -271,7 +271,7 @@
             </select>
 
             <label>Nombre de sus acompañantes (Grupo MCOMM):</label>
-            <input type="text" id="acompanantes">
+            <input type="text" id="acompanantes" placeholder="Acompañantes">
 
             <label>Avance (%):</label>
             <select id="avance">
@@ -302,10 +302,10 @@
             </div>
 
             <label>Horas empleadas en la actividad:</label>
-            <input type="number" id="horasActividad" step="0.5">
+            <input type="number" id="horasActividad" step="0.5" placeholder="0.0">
 
             <label>Horas empleadas para actividades adicionales:</label>
-            <input type="number" id="horasAdicionales" step="0.5">
+            <input type="number" id="horasAdicionales" step="0.5" placeholder="0.0">
 
             <label>Fotografías (Evidencias - Selección Múltiple):</label>
             <input type="file" id="fotos" multiple accept="image/*">
@@ -323,7 +323,6 @@
         const fotoInput = document.getElementById('fotos');
         const fileCounter = document.getElementById('fileCounter');
 
-        // Actualizar contador visual de archivos seleccionados
         fotoInput.addEventListener('change', () => {
             const count = fotoInput.files.length;
             if (count === 0) {
@@ -349,7 +348,6 @@
 
             const formData = new FormData();
 
-            // 1. Ingesta de campos de texto y selects
             formData.append('idp', document.getElementById('idp').value);
             formData.append('circuito', document.getElementById('circuito').value);
             formData.append('operador', document.getElementById('operador').value);
@@ -372,7 +370,6 @@
             formData.append('horasAdicionales', document.getElementById('horasAdicionales').value);
             formData.append('userTelegram', tg.initDataUnsafe?.user?.username || 'Desconocido');
 
-            // 2. Ingesta de elementos binarios múltiples (fotografías)
             if (fotoInput && fotoInput.files.length > 0) {
                 for (let i = 0; i < fotoInput.files.length; i++) {
                     const file = fotoInput.files[i];
