@@ -3,30 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bitácora de Avance Diario - MCOMM</title>
-    <!-- SDK oficial de Telegram WebApp -->
+    <title>Bitácora MCOMM</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: var(--tg-theme-bg-color, #f4f4f5);
-            --text-color: var(--tg-theme-text-color, #18181b);
+            --bg-color: var(--tg-theme-bg-color, #f4f4f9);
+            --text-color: var(--tg-theme-text-color, #333333);
             --hint-color: var(--tg-theme-hint-color, #71717a);
-            --button-color: var(--tg-theme-button-color, #2563eb);
+            --button-color: var(--tg-theme-button-color, #0056b3);
             --button-text-color: var(--tg-theme-button-text-color, #ffffff);
             --card-bg: var(--tg-theme-secondary-bg-color, #ffffff);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding: 16px;
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background: var(--bg-color); 
+            color: var(--text-color); 
+            padding: 15px; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -41,36 +34,21 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            text-align: center;
-            color: var(--button-color);
-        }
-
-        .form-group {
-            margin-bottom: 14px;
-        }
-
-        label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 6px;
-            color: var(--text-color);
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #d4d4d8;
-            border-radius: 8px;
-            font-size: 0.95rem;
+        h2 { text-align: center; color: var(--button-color); margin-bottom: 20px; }
+        
+        label { font-weight: bold; display: block; margin-top: 15px; font-size: 14px; }
+        
+        input, select, textarea { 
+            width: 100%; 
+            padding: 10px; 
+            margin-top: 5px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            box-sizing: border-box; 
+            font-size: 14px;
             background-color: #fafafa;
             color: var(--text-color);
             outline: none;
-            transition: border-color 0.2s;
         }
 
         input:focus, select:focus, textarea:focus {
@@ -78,55 +56,57 @@
             background-color: #fff;
         }
 
-        .checkbox-group {
-            border: 1px solid #d4d4d8;
-            border-radius: 8px;
-            padding: 10px;
-            background-color: #fafafa;
-            max-height: 150px;
-            overflow-y: auto;
+        .checkbox-group { 
+            background: #fafafa; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            max-height: 150px; 
+            overflow-y: auto; 
+            margin-top: 5px; 
+        }
+        
+        .checkbox-group label { 
+            font-weight: normal; 
+            display: flex; 
+            align-items: center; 
+            margin-top: 5px; 
+            font-size: 13px;
+        }
+        
+        .checkbox-group input { 
+            width: auto; 
+            margin-right: 10px; 
         }
 
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
+        .file-counter {
+            font-size: 12px;
+            color: var(--hint-color);
+            margin-top: 5px;
         }
 
-        .checkbox-item input {
-            width: auto;
-            margin-right: 8px;
-        }
-
-        .btn-submit {
-            width: 100%;
-            background-color: var(--button-color);
-            color: var(--button-text-color);
-            border: none;
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
+        button { 
+            background: var(--button-color); 
+            color: var(--button-text-color); 
+            border: none; 
+            padding: 15px; 
+            width: 100%; 
+            font-size: 16px; 
+            font-weight: bold;
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin-top: 25px; 
             transition: opacity 0.2s;
         }
-
-        .btn-submit:active {
-            opacity: 0.85;
-        }
-
-        .btn-submit:disabled {
-            background-color: #a1a1aa;
-            cursor: not-allowed;
-        }
+        
+        button:active { opacity: 0.85; }
+        button:disabled { background: #a1a1aa; cursor: not-allowed; }
 
         #loading {
             display: none;
             text-align: center;
             margin-top: 12px;
-            font-size: 0.875rem;
+            font-size: 14px;
             color: var(--hint-color);
         }
     </style>
@@ -137,83 +117,267 @@
         <h2>Bitácora de Avance Diario</h2>
         <form id="bitacoraForm">
             
-            <div class="form-group">
-                <label for="idp">IDP (ID Project):</label>
-                <input type="text" id="idp" name="idp" placeholder="Ingrese IDP" required>
+            <label>IDP (ID Project):</label>
+            <input type="text" id="idp" required>
+
+            <label>Nombre del Circuito:</label>
+            <input type="text" id="circuito" required>
+
+            <label>Operador:</label>
+            <select id="operador">
+                <option value="AMX">AMX</option>
+                <option value="AT&T">AT&T</option>
+                <option value="ATC">ATC</option>
+                <option value="AXTEL">AXTEL</option>
+                <option value="BESTEL-USA">BESTEL-USA</option>
+                <option value="CABLE BAHAMAS">CABLE BAHAMAS</option>
+                <option value="CENTURY LINK">CENTURY LINK</option>
+                <option value="COLUMBUS NETWORKS DE HONDURAS">COLUMBUS NETWORKS DE HONDURAS</option>
+                <option value="ENER">ENER</option>
+                <option value="IZZI - CABLEMAS">IZZI - CABLEMAS</option>
+                <option value="IZZI - CABLEVISION">IZZI - CABLEVISION</option>
+                <option value="IZZI-OPERBES">IZZI-OPERBES</option>
+                <option value="IZZI-TVI">IZZI-TVI</option>
+                <option value="LUMEN">LUMEN</option>
+                <option value="MEGABLE">MEGABLE</option>
+                <option value="NEX">NEX</option>
+                <option value="TELEM">TELEM</option>
+                <option value="TELMEX-USA">TELMEX-USA</option>
+                <option value="UTS">UTS</option>
+                <option value="C&W">C&W</option>
+                <option value="RECA">RECA</option>
+                <option value="TIGO">TIGO</option>
+            </select>
+
+            <label>Tecnología (Selección Múltiple):</label>
+            <div class="checkbox-group" id="tecnologia">
+                <label><input type="checkbox" value="DRX-30"> DRX-30</label>
+                <label><input type="checkbox" value="DRX-90"> DRX-90</label>
+                <label><input type="checkbox" value="EMXH800"> EMXH800</label>
+                <label><input type="checkbox" value="HiT"> HiT</label>
+                <label><input type="checkbox" value="GROOVE"> GROOVE</label>
+                <label><input type="checkbox" value="XTM102"> XTM102</label>
+                <label><input type="checkbox" value="XTM201"> XTM201</label>
+                <label><input type="checkbox" value="XTM301"> XTM301</label>
+                <label><input type="checkbox" value="XTM3000"> XTM3000</label>
+                <label><input type="checkbox" value="MTC9"> MTC9</label>
+                <label><input type="checkbox" value="XT5"> XT5</label>
+                <label><input type="checkbox" value="XTC2"> XTC2</label>
+                <label><input type="checkbox" value="XTC4"> XTC4</label>
+                <label><input type="checkbox" value="XTC10"> XTC10</label>
+                <label><input type="checkbox" value="XTC33"> XTC33</label>
+                <label><input type="checkbox" value="XTC36"> XTC36</label>
+                <label><input type="checkbox" value="OTC1"> OTC1</label>
+                <label><input type="checkbox" value="DTC"> DTC</label>
+                <label><input type="checkbox" value="DTNX"> DTNX</label>
+                <label><input type="checkbox" value="ILS-FLEX"> ILS-FLEX</label>
             </div>
 
-            <div class="form-group">
-                <label for="circuito">Nombre del Circuito:</label>
-                <input type="text" id="circuito" name="circuito" placeholder="Nombre del circuito" required>
+            <label>Nombre de quien reporta:</label>
+            <select id="reporta">
+                <option value="Carlos Pérez">Carlos Pérez</option>
+                <option value="Ignacio Varela">Ignacio Varela</option>
+                <option value="Jorge Carreño">Jorge Carreño</option>
+                <option value="Jorge Lara">Jorge Lara</option>
+                <option value="Jovanni Silva">Jovanni Silva</option>
+                <option value="Luis Maciel">Luis Maciel</option>
+                <option value="Mauricio Ramírez">Mauricio Ramírez</option>
+                <option value="Miguel Cardenas">Miguel Cardenas</option>
+                <option value="Oscar de la Torre">Oscar de la Torre</option>
+                <option value="Oscar Jimenez">Oscar Jimenez</option>
+                <option value="Ricardo Carreño">Ricardo Carreño</option>
+                <option value="Santiago Gasca">Santiago Gasca</option>
+                <option value="Sergio Carreño">Sergio Carreño</option>
+                <option value="Sergio Silva">Sergio Silva</option>
+                <option value="Otro">Otro (No aparezco en Lista)</option>
+            </select>
+
+            <label>Empresa a la que pertenece:</label>
+            <select id="empresa">
+                <option value="MCOMM">MCOMM</option>
+            </select>
+
+            <label>Nombre del PM:</label>
+            <select id="pm">
+                <option value="Alberto Medina">Alberto Medina</option>
+                <option value="Victor Sanchez">Victor Sanchez</option>
+                <option value="Luis Mejia">Luis Mejia</option>
+                <option value="Jeannette Carpio">Jeannette Carpio</option>
+                <option value="Jorge Barron">Jorge Barron</option>
+                <option value="Victor Hugo Lopez">Victor Hugo Lopez</option>
+                <option value="Martha Govea">Martha Govea</option>
+                <option value="Fabiola Vazquez">Fabiola Vazquez</option>
+                <option value="José Carrasco">José Carrasco</option>
+            </select>
+
+            <label>Nombre de PSE:</label>
+            <select id="pse">
+                <option value="Antonio Calvo">Antonio Calvo</option>
+                <option value="Armando Delgado">Armando Delgado</option>
+                <option value="Edgar Matsui">Edgar Matsui</option>
+                <option value="Enrique Gomez">Enrique Gomez</option>
+                <option value="Erick Galvez">Erick Galvez</option>
+                <option value="Mario Castro">Mario Castro</option>
+                <option value="Misael Velasco">Misael Velasco</option>
+                <option value="Francisco Cardenas">Francisco Cardenas</option>
+                <option value="Luis Vega">Luis Vega</option>
+                <option value="Arturo Ramirez">Arturo Ramirez</option>
+                <option value="Jaime Mora">Jaime Mora</option>
+                <option value="Héctor Villegas">Héctor Villegas</option>
+                <option value="Otro">Otro (No aparece en la lista)</option>
+            </select>
+
+            <label>Nombre de Sitio:</label>
+            <input type="text" id="sitio" required>
+
+            <label>Actividad desarrollada (Selección Múltiple):</label>
+            <div class="checkbox-group" id="actividad">
+                <label><input type="checkbox" value="Llegada al sitio"> Llegada al sitio</label>
+                <label><input type="checkbox" value="Desempaque de inventario"> Desempaque de inventario</label>
+                <label><input type="checkbox" value="Reporte de Inventario"> Reporte de Inventario</label>
+                <label><input type="checkbox" value="Desmontaje"> Desmontaje</label>
+                <label><input type="checkbox" value="Instalacion de Rack"> Instalacion de Rack</label>
+                <label><input type="checkbox" value="Instalacion de repisa"> Instalacion de repisa</label>
+                <label><input type="checkbox" value="Instalacion de tarjetas/Modulos"> Instalacion de tarjetas/Modulos</label>
+                <label><input type="checkbox" value="Instalacion de PDU"> Instalacion de PDU</label>
+                <label><input type="checkbox" value="Commisionamiento de Repisa"> Commisionamiento de Repisa</label>
+                <label><input type="checkbox" value="Pruebas-locales"> Pruebas-locales</label>
+                <label><input type="checkbox" value="Trouble shooting"> Trouble shooting</label>
+                <label><input type="checkbox" value="INCIDENCIAS"> INCIDENCIAS</label>
             </div>
 
-            <div class="form-group">
-                <label for="operador">Operador:</label>
-                <select id="operador" name="operador" required>
-                    <option value="AMX">AMX</option>
-                    <option value="Operador 2">Operador 2</option>
-                </select>
+            <label>Comentarios Relevantes:</label>
+            <textarea id="comentarios" rows="3"></textarea>
+
+            <label>Problemas Persistentes:</label>
+            <textarea id="problemas" rows="3"></textarea>
+
+            <label>Indique la siguiente tarea a ejecutar (Selección Múltiple):</label>
+            <div class="checkbox-group" id="siguienteTarea">
+                <label><input type="checkbox" value="Llegada al sitio"> Llegada al sitio</label>
+                <label><input type="checkbox" value="Desempaque de inventario"> Desempaque de inventario</label>
+                <label><input type="checkbox" value="Pruebas - Enlace"> Pruebas - Enlace</label>
+                <label><input type="checkbox" value="Trouble shooting"> Trouble shooting</label>
+                <label><input type="checkbox" value="Entrega a cliente"> Entrega a cliente</label>
+                <label><input type="checkbox" value="Se concluye actividad"> Se concluye actividad</label>
             </div>
 
-            <div class="form-group">
-                <label>Tecnología (Selección Múltiple):</label>
-                <div class="checkbox-group">
-                    <div class="checkbox-item"><input type="checkbox" name="tecnologia" value="DRX-30"> DRX-30</div>
-                    <div class="checkbox-item"><input type="checkbox" name="tecnologia" value="DRX-90"> DRX-90</div>
-                    <div class="checkbox-item"><input type="checkbox" name="tecnologia" value="EMXH800"> EMXH800</div>
-                    <div class="checkbox-item"><input type="checkbox" name="tecnologia" value="HiT"> HiT</div>
-                    <div class="checkbox-item"><input type="checkbox" name="tecnologia" value="GROOVE"> GROOVE</div>
-                    <div class="checkbox-item"><input type="checkbox" name="tecnologia" value="XTM102"> XTM102</div>
-                </div>
+            <label>Estado de la Asignación:</label>
+            <select id="estado">
+                <option value="Completo">Completo</option>
+                <option value="En progreso">En progreso</option>
+                <option value="Detenido">Detenido</option>
+                <option value="Cancelado">Cancelado</option>
+            </select>
+
+            <label>Nombre de sus acompañantes (Grupo MCOMM):</label>
+            <input type="text" id="acompanantes">
+
+            <label>Avance (%):</label>
+            <select id="avance">
+                <option value="15%">15%</option>
+                <option value="25%">25%</option>
+                <option value="50%">50%</option>
+                <option value="75%">75%</option>
+                <option value="100%">100%</option>
+            </select>
+
+            <label>Adicionales (Requiere autorización del PSE):</label>
+            <select id="adicionales">
+                <option value="Ninguna">Ninguna</option>
+                <option value="Smart hands">Smart hands</option>
+                <option value="Hand - Carry">Hand - Carry</option>
+                <option value="Logistica-Paquetería">Logistica-Paquetería</option>
+                <option value="Site Conditioning">Site Conditioning</option>
+            </select>
+
+            <label>¿Trae consigo equipo de medición?:</label>
+            <div class="checkbox-group" id="equipoMedicion">
+                <label><input type="checkbox" value="No"> No</label>
+                <label><input type="checkbox" value="1G"> 1G</label>
+                <label><input type="checkbox" value="10G"> 10G</label>
+                <label><input type="checkbox" value="100G"> 100G</label>
+                <label><input type="checkbox" value="OSA"> OSA</label>
+                <label><input type="checkbox" value="OTDRs, Fuente de Luz PMD-CD"> OTDRs, Fuente de Luz PMD-CD</label>
             </div>
 
-            <div class="form-group">
-                <label for="reporta">Nombre de quien reporta:</label>
-                <select id="reporta" name="reporta" required>
-                    <option value="Carlos Pérez">Carlos Pérez</option>
-                    <option value="Supervisor 2">Supervisor 2</option>
-                </select>
-            </div>
+            <label>Horas empleadas en la actividad:</label>
+            <input type="number" id="horasActividad" step="0.5">
 
-            <div class="form-group">
-                <label for="fotos">Evidencia Fotográfica:</label>
-                <input type="file" id="fotos" name="fotos" accept="image/*" capture="environment">
-            </div>
+            <label>Horas empleadas para actividades adicionales:</label>
+            <input type="number" id="horasAdicionales" step="0.5">
 
-            <button type="submit" class="btn-submit" id="btnEnviar">Enviar Registro</button>
-            <div id="loading">Enviando datos al servidor... Por favor espere.</div>
+            <label>Fotografías (Evidencias - Selección Múltiple):</label>
+            <input type="file" id="fotos" multiple accept="image/*">
+            <div class="file-counter" id="fileCounter">Ninguna imagen seleccionada</div>
+
+            <button type="button" id="btnEnviar" onclick="enviarReporte()">Enviar Reporte</button>
+            <div id="loading">Enviando registros y archivos al servidor... Por favor espere.</div>
         </form>
     </div>
 
     <script>
-        const tg = window.Telegram.WebApp;
+        let tg = window.Telegram.WebApp;
         tg.expand();
 
-        const form = document.getElementById('bitacoraForm');
-        const btnEnviar = document.getElementById('btnEnviar');
-        const loading = document.getElementById('loading');
+        const fotoInput = document.getElementById('fotos');
+        const fileCounter = document.getElementById('fileCounter');
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        // Actualizar contador visual de archivos seleccionados
+        fotoInput.addEventListener('change', () => {
+            const count = fotoInput.files.length;
+            if (count === 0) {
+                fileCounter.textContent = 'Ninguna imagen seleccionada';
+            } else if (count === 1) {
+                fileCounter.textContent = '1 imagen seleccionada';
+            } else {
+                fileCounter.textContent = `${count} imágenes seleccionadas`;
+            }
+        });
+
+        function obtenerSeleccionados(idContainer) {
+            const checkboxes = document.querySelectorAll(`#${idContainer} input[type="checkbox"]:checked`);
+            return Array.from(checkboxes).map(cb => cb.value).join(', ');
+        }
+
+        async function enviarReporte() {
+            const btnEnviar = document.getElementById('btnEnviar');
+            const loading = document.getElementById('loading');
 
             btnEnviar.disabled = true;
             loading.style.display = 'block';
 
             const formData = new FormData();
+
+            // 1. Ingesta de campos de texto y selects
             formData.append('idp', document.getElementById('idp').value);
             formData.append('circuito', document.getElementById('circuito').value);
             formData.append('operador', document.getElementById('operador').value);
+            formData.append('tecnologia', obtenerSeleccionados('tecnologia'));
             formData.append('reporta', document.getElementById('reporta').value);
+            formData.append('empresa', document.getElementById('empresa').value);
+            formData.append('pm', document.getElementById('pm').value);
+            formData.append('pse', document.getElementById('pse').value);
+            formData.append('sitio', document.getElementById('sitio').value);
+            formData.append('actividad', obtenerSeleccionados('actividad'));
+            formData.append('comentarios', document.getElementById('comentarios').value);
+            formData.append('problemas', document.getElementById('problemas').value);
+            formData.append('siguienteTarea', obtenerSeleccionados('siguienteTarea'));
+            formData.append('estado', document.getElementById('estado').value);
+            formData.append('acompanantes', document.getElementById('acompanantes').value);
+            formData.append('avance', document.getElementById('avance').value);
+            formData.append('adicionales', document.getElementById('adicionales').value);
+            formData.append('equipoMedicion', obtenerSeleccionados('equipoMedicion'));
+            formData.append('horasActividad', document.getElementById('horasActividad').value);
+            formData.append('horasAdicionales', document.getElementById('horasAdicionales').value);
+            formData.append('userTelegram', tg.initDataUnsafe?.user?.username || 'Desconocido');
 
-            const tecnologias = [];
-            document.querySelectorAll('input[name="tecnologia"]:checked').forEach((checkbox) => {
-                tecnologias.push(checkbox.value);
-            });
-            formData.append('tecnologias', tecnologias.join(', '));
-
-            const fotoInput = document.getElementById('fotos');
-            if (fotoInput.files.length > 0) {
-                formData.append('fotos', fotoInput.files[0]);
+            // 2. Ingesta de elementos binarios múltiples (fotografías)
+            if (fotoInput && fotoInput.files.length > 0) {
+                for (let i = 0; i < fotoInput.files.length; i++) {
+                    const file = fotoInput.files[i];
+                    formData.append('fotos', file, file.name);
+                }
             }
 
             try {
@@ -225,19 +389,20 @@
                     body: formData
                 });
 
-                if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status}`);
+                if (response.ok) {
+                    alert('¡Reporte enviado con éxito!');
+                    tg.close();
+                } else {
+                    alert('El servidor rechazó el envío. Código: ' + response.status);
+                    btnEnviar.disabled = false;
+                    loading.style.display = 'none';
                 }
-
-                alert('¡Bitácora registrada con éxito!');
-                tg.close();
-
             } catch (error) {
-                alert('No se pudo enviar el registro. Intente nuevamente.');
+                alert('Error de conexión con el servidor: ' + error.message);
                 btnEnviar.disabled = false;
                 loading.style.display = 'none';
             }
-        });
+        }
     </script>
 </body>
 </html>
