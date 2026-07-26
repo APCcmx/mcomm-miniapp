@@ -228,10 +228,9 @@
         }
 
         async function enviarReporte() {
-            // Creamos el contenedor FormData para enviar texto y archivos binarios juntos
             const formData = new FormData();
 
-            // Añadimos campos de texto y selecciones
+            // 1. Añadir campos de texto primero
             formData.append('idp', document.getElementById('idp').value);
             formData.append('circuito', document.getElementById('circuito').value);
             formData.append('operador', document.getElementById('operador').value);
@@ -254,18 +253,17 @@
             formData.append('horasAdicionales', document.getElementById('horasAdicionales').value);
             formData.append('userTelegram', tg.initDataUnsafe?.user?.username || 'Desconocido');
 
-            // Capturamos y agregamos las fotografías (evidencias) de forma binaria
+            // 2. Adjuntar las fotografías de forma binaria explícita con su nombre y tipo
             const inputFotos = document.getElementById('fotos');
             if (inputFotos && inputFotos.files.length > 0) {
                 for (let i = 0; i < inputFotos.files.length; i++) {
-                    // La llave 'fotos' empalma exactamente con el 'Field Name for Binary Data' en n8n
-                    formData.append('fotos', inputFotos.files[i]);
+                    const file = inputFotos.files[i];
+                    // La clave 'fotos' mapea directamente con 'Field Name for Binary Data' en n8n
+                    formData.append('fotos', file, file.name);
                 }
             }
 
             try {
-                // NOTA CRÍTICA: Al usar FormData, NO se declara la cabecera 'Content-Type'. 
-                // El navegador maneja el protocolo multipart de forma automática.
                 const response = await fetch('https://automatizacion-abordaje-n8n.iqzp3s.easypanel.host/webhook-test/bitacora-abordaje', {
                     method: 'POST',
                     body: formData
