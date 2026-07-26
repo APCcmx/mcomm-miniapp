@@ -3,207 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bitácora de Abordaje - MCOMM</title>
-    <!-- SDK oficial de Telegram WebApp -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Prueba de Conexión - n8n</title>
     <style>
-        :root {
-            --bg-color: var(--tg-theme-bg-color, #f4f4f5);
-            --text-color: var(--tg-theme-text-color, #18181b);
-            --hint-color: var(--tg-theme-hint-color, #71717a);
-            --button-color: var(--tg-theme-button-color, #2563eb);
-            --button-text-color: var(--tg-theme-button-text-color, #ffffff);
-            --card-bg: var(--tg-theme-secondary-bg-color, #ffffff);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f4f4f5;
+            color: #18181b;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
         }
-
-        .container {
-            width: 100%;
-            max-width: 480px;
-            background-color: var(--card-bg);
+        .card {
+            background: #ffffff;
+            padding: 24px;
             border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
             text-align: center;
         }
-
-        .form-group {
-            margin-bottom: 14px;
+        h2 {
+            font-size: 1.2rem;
+            margin-bottom: 16px;
         }
-
-        label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 6px;
-            color: var(--text-color);
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #d4d4d8;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            background-color: #fafafa;
-            color: var(--text-color);
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--button-color);
-            background-color: #fff;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .btn-submit {
-            width: 100%;
-            background-color: var(--button-color);
-            color: var(--button-text-color);
+        button {
+            background-color: #2563eb;
+            color: white;
             border: none;
-            border-radius: 8px;
-            padding: 12px;
+            padding: 12px 20px;
             font-size: 1rem;
             font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
+            width: 100%;
             margin-top: 10px;
-            transition: opacity 0.2s;
         }
-
-        .btn-submit:active {
-            opacity: 0.85;
+        button:active {
+            opacity: 0.8;
         }
-
-        .btn-submit:disabled {
-            background-color: #a1a1aa;
-            cursor: not-allowed;
-        }
-
-        #loading {
-            display: none;
-            text-align: center;
-            margin-top: 12px;
-            font-size: 0.875rem;
-            color: var(--hint-color);
+        #resultado {
+            margin-top: 16px;
+            font-size: 0.9rem;
+            word-break: break-all;
+            color: #52525b;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Registro de Abordaje</h2>
-        <form id="bitacoraForm">
-            
-            <div class="form-group">
-                <label for="ruta">Ruta / Unidad</label>
-                <input type="text" id="ruta" name="ruta" placeholder="Ej. C-15 A" required>
-            </div>
-
-            <div class="form-group">
-                <label for="operador">Nombre del Operador</label>
-                <input type="text" id="operador" name="operador" placeholder="Nombre completo" required>
-            </div>
-
-            <div class="form-group">
-                <label for="observaciones">Observaciones</label>
-                <textarea id="observaciones" name="observaciones" placeholder="Detalles de la supervisión..."></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="fotos">Evidencia Fotográfica</label>
-                <input type="file" id="fotos" name="fotos" accept="image/*" capture="environment">
-            </div>
-
-            <button type="submit" class="btn-submit" id="btnEnviar">Enviar Registro</button>
-            <div id="loading">Enviando datos al servidor... Por favor espere.</div>
-        </form>
+    <div class="card">
+        <h2>Prueba de Diagnóstico n8n</h2>
+        <p>Haz clic para verificar la comunicación con el servidor de producción.</p>
+        <button onclick="probarConexion()">Probar Conexión</button>
+        <div id="resultado">Esperando acción...</div>
     </div>
 
     <script>
-        // Inicializar Telegram WebApp SDK
-        const tg = window.Telegram.WebApp;
-        tg.expand();
+        async function probarConexion() {
+            const divResultado = document.getElementById('resultado');
+            divResultado.innerText = "Conectando con n8n...";
+            divResultado.style.color = "#2563eb";
 
-        const form = document.getElementById('bitacoraForm');
-        const btnEnviar = document.getElementById('btnEnviar');
-        const loading = document.getElementById('loading');
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            // Bloquear interfaz durante el envío
-            btnEnviar.disabled = true;
-            loading.style.display = 'block';
-
-            // Capturar datos del formulario
-            const formData = new FormData();
-            formData.append('ruta', document.getElementById('ruta').value);
-            formData.append('operador', document.getElementById('operador').value);
-            formData.append('observaciones', document.getElementById('observaciones').value);
-            
-            // Adjuntar imagen si fue seleccionada
-            const fotoInput = document.getElementById('fotos');
-            if (fotoInput.files.length > 0) {
-                formData.append('fotos', fotoInput.files[0]);
-            }
-
-            // Identificador opcional del usuario de Telegram
-            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                formData.append('telegram_user', tg.initDataUnsafe.user.username || tg.initDataUnsafe.user.id);
-            }
+            const urlWebhook = 'https://automatizacion-abordaje-n8n.iqzp3s.easypanel.host/webhook/bitacora-abordaje';
 
             try {
-                // URL absoluta de producción en tu n8n de Easypanel
-                const N8N_WEBHOOK_URL = 'https://automatizacion-abordaje-n8n.iqzp3s.easypanel.host/webhook/bitacora-abordaje';
-
-                const response = await fetch(N8N_WEBHOOK_URL, {
+                const response = await fetch(urlWebhook, {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        origen: "Prueba desde Telegram Mini App",
+                        timestamp: new Date().toISOString()
+                    })
                 });
 
                 if (!response.ok) {
-                    throw new Error(`Error en el servidor: ${response.status} ${response.statusText}`);
+                    throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
                 }
 
-                const resultado = await response.json();
-                
-                // Notificación de éxito y cierre de la Mini App en Telegram
-                alert('¡Bitácora registrada con éxito!');
-                tg.close();
+                const data = await response.json();
+                divResultado.innerText = "¡Conexión Exitosa! Respuesta: " + JSON.stringify(data);
+                divResultado.style.color = "#16a34a"; // Verde éxito
 
             } catch (error) {
-                console.error('Fallo en la petición:', error);
-                alert('No se pudo conectar con el servidor: ' + error.message);
-                btnEnviar.disabled = false;
-                loading.style.display = 'none';
+                console.error("Detalle del error:", error);
+                divResultado.innerText = "Fallo: " + error.message;
+                divResultado.style.color = "#dc2626"; // Rojo error
             }
-        });
+        }
     </script>
 </body>
 </html>
