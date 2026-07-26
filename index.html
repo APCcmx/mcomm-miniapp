@@ -230,7 +230,7 @@
         async function enviarReporte() {
             const formData = new FormData();
 
-            // 1. Campos de texto
+            // 1. Ingesta de campos de texto
             formData.append('idp', document.getElementById('idp').value);
             formData.append('circuito', document.getElementById('circuito').value);
             formData.append('operador', document.getElementById('operador').value);
@@ -253,7 +253,7 @@
             formData.append('horasAdicionales', document.getElementById('horasAdicionales').value);
             formData.append('userTelegram', tg.initDataUnsafe?.user?.username || 'Desconocido');
 
-            // 2. Fotografías
+            // 2. Ingesta de elementos binarios (fotografías)
             const inputFotos = document.getElementById('fotos');
             if (inputFotos && inputFotos.files.length > 0) {
                 for (let i = 0; i < inputFotos.files.length; i++) {
@@ -263,19 +263,22 @@
             }
 
             try {
-                // Petición de producción con control de modo cors
+                // Petición hacia la URL de producción de n8n con manejo de cors explícito
                 const response = await fetch('https://automatizacion-abordaje-n8n.iqzp3s.easypanel.host/webhook/bitacora-abordaje', {
                     method: 'POST',
-                    mode: 'cors', // Forzar aceptación de origen cruzado
+                    mode: 'cors',
                     body: formData
                 });
 
                 if (response.ok) {
                     tg.close();
                 } else {
-                    alert('El servidor rechazó el reporte. Código: ' + response.status);
+                    alert('El servidor rechazó el envío. Código: ' + response.status);
                 }
             } catch (error) {
-                alert('Error crítico de red: ' + error.message);
+                alert('Error de conexión con el servidor: ' + error.message);
             }
         }
+    </script>
+</body>
+</html>
