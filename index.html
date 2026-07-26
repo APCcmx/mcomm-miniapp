@@ -186,7 +186,6 @@
     </div>
 
     <script>
-        // Inicializar SDK de Telegram WebApp
         const tg = window.Telegram.WebApp;
         tg.expand();
 
@@ -206,21 +205,18 @@
             formData.append('operador', document.getElementById('operador').value);
             formData.append('reporta', document.getElementById('reporta').value);
 
-            // Recolectar tecnologías seleccionadas
             const tecnologias = [];
             document.querySelectorAll('input[name="tecnologia"]:checked').forEach((checkbox) => {
                 tecnologias.push(checkbox.value);
             });
             formData.append('tecnologias', tecnologias.join(', '));
 
-            // Adjuntar archivo si existe
             const fotoInput = document.getElementById('fotos');
             if (fotoInput.files.length > 0) {
                 formData.append('fotos', fotoInput.files[0]);
             }
 
             try {
-                // URL absoluta de producción en tu n8n de Easypanel
                 const N8N_WEBHOOK_URL = 'https://automatizacion-abordaje-n8n.iqzp3s.easypanel.host/webhook/bitacora-abordaje';
 
                 const response = await fetch(N8N_WEBHOOK_URL, {
@@ -230,15 +226,14 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+                    throw new Error(`Error HTTP: ${response.status}`);
                 }
 
                 alert('¡Bitácora registrada con éxito!');
                 tg.close();
 
             } catch (error) {
-                console.error('Fallo en la petición:', error);
-                alert('Error de conexión: ' + error.message);
+                alert('No se pudo enviar el registro. Intente nuevamente.');
                 btnEnviar.disabled = false;
                 loading.style.display = 'none';
             }
